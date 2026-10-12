@@ -14,7 +14,7 @@
 
 **Taskee** is a lightweight, blazing-fast, cross-platform Desktop System Resource Monitor and Mini Task Manager written entirely in pure Rust using `eframe`, `egui`, `egui_plot`, and `sysinfo`.
 
-Designed with a brutalist, high-density technical HUD aesthetic inspired by [ArtCraft](https://getartcraft.com/), Taskee dispenses with generic bubbly cards in favor of razor-sharp borders, monospace typography, and comprehensive hardware instrumentation.
+Designed with a brutalist aesthetic, Taskee dispenses with generic bubbly cards in favor of razor-sharp borders, monospace typography, and comprehensive hardware instrumentation.
 
 ---
 
@@ -64,21 +64,22 @@ Designed with a brutalist, high-density technical HUD aesthetic inspired by [Art
 
 ```text
 taskee/
-├── Cargo.toml
-├── README.md
+├── Cargo.toml               # Workspace manifest
+├── README.md                # Documentation & quickstart
 ├── assets/
 │   └── logo.jpg             # High-resolution cyber HUD logo
-└── src/
-    ├── main.rs              # Application entry point & ArtCraft theme init
-    ├── app.rs               # Main GUI state, HUD navigation, & 1-second update loop
-    ├── monitor.rs           # Multi-threaded telemetry engine (CPU, Cores, RAM, Swap, Disks, Net, Processes)
-    └── ui/
-        ├── mod.rs           # UI module declarations
-        ├── theme.rs         # ArtCraft ultra-dark color tokens & frame styles
-        ├── overview.rs      # System specs banner, 4-card HUD, top process consumers
-        ├── performance.rs   # Live egui_plot time-series charts & per-core thread grid
-        ├── processes.rs     # Workstation striped process table with search & sorting
-        └── storage_net.rs   # Mounted filesystem partitions & network adapters
+├── src/                     # Desktop GUI App (eframe + egui)
+│   ├── main.rs              # Application entry point & ArtCraft theme init
+│   ├── app.rs               # Main GUI state, HUD navigation, & 1-second update loop
+│   ├── monitor.rs           # Multi-threaded telemetry engine
+│   └── ui/                  # Workstation UI panels & charts
+└── website/                 # Official Web Platform (100% Pure Rust • Axum)
+    ├── Cargo.toml           # Website package dependencies
+    ├── src/
+    │   ├── main.rs          # Axum router & server endpoints
+    │   ├── assets.rs        # Embedded static asset distribution
+    │   └── pages/           # Home, About, Install, Contact, 404
+    └── static/              # CSS styles, JS telemetry simulator, images
 ```
 
 ---
@@ -89,7 +90,7 @@ taskee/
 Run directly from PowerShell or Command Prompt:
 
 ### 1. Pre-built Executable (Recommended for Non-Developers)
-Download the standalone executable directly from the [Releases](https://github.com/USERNAME/taskee/releases) tab:
+Download the standalone executable directly from the [Releases](https://github.com/alrifatsabbir/taskee/releases) tab:
 - **Windows**: Download `taskee-windows-x86_64.exe` and double-click to launch.
 - **Linux**: Download `taskee-linux-x86_64`, mark executable (`chmod +x taskee-linux-x86_64`), and run `./taskee-linux-x86_64`.
 
@@ -101,7 +102,7 @@ No Rust, Node.js, or external runtimes are required.
 Anyone with Cargo installed can install it globally to their system with a single command:
 
 ```bash
-cargo install --git https://github.com/USERNAME/taskee
+cargo install --git https://github.com/alrifatsabbir/taskee
 ```
 
 Once installed, simply launch `taskee` from anywhere in your terminal or prompt:
@@ -115,21 +116,42 @@ taskee
 
 #### Windows:
 ```powershell
-git clone https://github.com/USERNAME/taskee.git
+git clone https://github.com/alrifatsabbir/taskee.git
 cd taskee
 cargo run --release
 ```
 
 #### Linux & WSL:
 ```bash
-git clone https://github.com/USERNAME/taskee.git
+git clone https://github.com/alrifatsabbir/taskee.git
 cd taskee
 LIBGL_ALWAYS_SOFTWARE=1 cargo run --release
 ```
 
 ---
 
+### 4. Run the Official Website (100% Pure Rust)
+
+The official website is written entirely in Rust using `axum` and `tokio`. You can run the web server locally with:
+
+```bash
+# From workspace root:
+cargo run -p taskee-website
+
+# Or directly from the website directory:
+cd website
+cargo run
+```
+
+Then visit the pages in your browser:
+- **Home**: `http://localhost:3000/`
+- **About**: `http://localhost:3000/about`
+- **Install**: `http://localhost:3000/install`
+- **Contact**: `http://localhost:3000/contact` (without form)
+
+---
+
 ## 🔒 Requirements
 
-- Zero Webview, zero Node.js/JavaScript, zero Tauri. 100% Pure Native Rust.
+- Zero Webview, zero Node.js/JavaScript runtime dependencies, zero Tauri. 100% Pure Native Rust.
 

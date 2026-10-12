@@ -1,0 +1,463 @@
+use super::layout::render_page;
+
+pub fn render_home() -> String {
+    let title = "Taskee — Desktop System Resource Monitor | 100% Pure Rust Telemetry";
+    let description = "High-density workstation telemetry and mini task manager written 100% in pure Rust with eframe, egui, and sysinfo. Zero webview, zero Node.js.";
+
+    let content = r##"
+    <!-- Hero Section -->
+    <section class="hero" id="homeHero">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <div>
+            <span class="hud-tag hud-tag-accent">⚡ 100% PURE RUST • HIGH-DENSITY HUD • ZERO ELECTRON</span>
+          </div>
+          <h1 class="hero-title">
+            Workstation Telemetry <span class="gradient-text">Engineered for Power Users</span>
+          </h1>
+          <p class="hero-desc">
+            <strong>Taskee</strong> is a lightweight, blazing-fast desktop system resource monitor and mini task manager. Built from scratch in pure native Rust with <code>eframe</code>, <code>egui_plot</code>, and <code>sysinfo</code>.
+          </p>
+
+          <div class="hero-cta-group">
+            <a href="/install" class="btn btn-primary" id="heroBtnDownload">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              <span>GET TASKEE</span>
+            </a>
+            <a href="/about" class="btn btn-secondary" id="heroBtnAbout">
+              <span>EXPLORE SPECS</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+          </div>
+
+          <div class="hero-metrics-bar">
+            <div class="hero-metric-item">
+              <span class="hero-metric-val">&lt; 15 MB</span>
+              <span class="hero-metric-lbl">RAM Footprint</span>
+            </div>
+            <div class="hero-metric-item">
+              <span class="hero-metric-val">0.0%</span>
+              <span class="hero-metric-lbl">Idle CPU Drag</span>
+            </div>
+            <div class="hero-metric-item">
+              <span class="hero-metric-val">60 FPS</span>
+              <span class="hero-metric-lbl">Immediate-Mode GUI</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive HUD Simulator Preview -->
+        <div class="hud-simulator-card" id="heroHudSimulator" aria-label="Taskee Live Telemetry HUD Simulation">
+          <div class="hud-header">
+            <div class="hud-dots">
+              <span class="hud-dot red"></span>
+              <span class="hud-dot yellow"></span>
+              <span class="hud-dot green"></span>
+            </div>
+            <div class="hud-header-title">TASKEE // ART-CRAFT WORKSTATION HUD</div>
+            <div class="hud-tag hud-tag-emerald" style="padding: 2px 6px; font-size: 0.65rem;">
+              <span class="pulse-dot" style="width: 5px; height: 5px;"></span>
+              <span>1000ms TICK</span>
+            </div>
+          </div>
+
+          <div class="hud-body">
+            <!-- 3 Stat Cards -->
+            <div class="hud-stats-row">
+              <div class="hud-stat-box">
+                <div class="hud-stat-header">
+                  <span class="hud-stat-title">CPU LOAD</span>
+                  <span class="hud-tag" style="font-size: 0.6rem; padding: 1px 4px;">16C/32T</span>
+                </div>
+                <div class="hud-stat-num" id="hudCpuPercent">24.6%</div>
+                <div class="hud-progress-track">
+                  <div class="hud-progress-fill" id="hudCpuFill" style="width: 25%;"></div>
+                </div>
+              </div>
+
+              <div class="hud-stat-box">
+                <div class="hud-stat-header">
+                  <span class="hud-stat-title">MEMORY</span>
+                  <span class="hud-tag" style="font-size: 0.6rem; padding: 1px 4px;">32 GB</span>
+                </div>
+                <div class="hud-stat-num" id="hudRamPercent" style="color: var(--status-ok);">37.2%</div>
+                <div class="hud-progress-track">
+                  <div class="hud-progress-fill green" id="hudRamFill" style="width: 37%;"></div>
+                </div>
+              </div>
+
+              <div class="hud-stat-box">
+                <div class="hud-stat-header">
+                  <span class="hud-stat-title">UPTIME</span>
+                  <span class="hud-tag" style="font-size: 0.6rem; padding: 1px 4px;">KERNEL</span>
+                </div>
+                <div class="hud-stat-num" id="hudUptime" style="font-size: 0.95rem; line-height: 1.4;">3h 58m 05s</div>
+                <div style="font-size: 0.65rem; color: var(--text-dim); margin-top: 4px; font-family: var(--font-mono);">
+                  NET RX: <span id="hudRxRate" style="color: var(--accent-teal);">2.40 MB/s</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 60s Live Time-Series Chart Box -->
+            <div class="hud-chart-container">
+              <div class="hud-chart-header">
+                <span class="hud-chart-title">LIVE 60-SECOND TELEMETRY PLOT (egui_plot)</span>
+                <div class="hud-chart-legend">
+                  <div class="hud-legend-item">
+                    <span class="legend-square" style="background: var(--accent-blue);"></span>
+                    <span>CPU LOAD</span>
+                  </div>
+                  <div class="hud-legend-item">
+                    <span class="legend-square" style="background: var(--status-ok);"></span>
+                    <span>RAM USAGE</span>
+                  </div>
+                </div>
+              </div>
+              <canvas id="hudTelemetryCanvas" class="hud-canvas"></canvas>
+            </div>
+
+            <!-- Per-Core 16-Thread Matrix -->
+            <div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 4px; font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-dim);">
+                <span>PER-CORE THREAD UTILIZATION MATRIX</span>
+                <span>CALIBRATED SYSINFO</span>
+              </div>
+              <div class="core-grid" id="hudCoreGrid">
+                <div class="core-cell"><span class="core-cell-id">C0</span><div class="core-cell-bar-wrap"><div class="core-cell-bar" id="coreBar-0" style="height: 35%;"></div></div><span class="core-cell-val" id="coreVal-0">35%</span></div>
+                <div class="core-cell"><span class="core-cell-id">C1</span><div class="core-cell-bar-wrap"><div class="core-cell-bar" id="coreBar-1" style="height: 18%;"></div></div><span class="core-cell-val" id="coreVal-1">18%</span></div>
+                <div class="core-cell"><span class="core-cell-id">C2</span><div class="core-cell-bar-wrap"><div class="core-cell-bar" id="coreBar-2" style="height: 62%;"></div></div><span class="core-cell-val" id="coreVal-2">62%</span></div>
+                <div class="core-cell"><span class="core-cell-id">C3</span><div class="core-cell-bar-wrap"><div class="core-cell-bar" id="coreBar-3" style="height: 29%;"></div></div><span class="core-cell-val" id="coreVal-3">29%</span></div>
+                <div class="core-cell"><span class="core-cell-id">C4</span><div class="core-cell-bar-wrap"><div class="core-cell-bar" id="coreBar-4" style="height: 44%;"></div></div><span class="core-cell-val" id="coreVal-4">44%</span></div>
+                <div class="core-cell"><span class="core-cell-id">C5</span><div class="core-cell-bar-wrap"><div class="core-cell-bar" id="coreBar-5" style="height: 80%;"></div></div><span class="core-cell-val" id="coreVal-5">80%</span></div>
+                <div class="core-cell"><span class="core-cell-id">C6</span><div class="core-cell-bar-wrap"><div class="core-cell-bar" id="coreBar-6" style="height: 22%;"></div></div><span class="core-cell-val" id="coreVal-6">22%</span></div>
+                <div class="core-cell"><span class="core-cell-id">C7</span><div class="core-cell-bar-wrap"><div class="core-cell-bar" id="coreBar-7" style="height: 15%;"></div></div><span class="core-cell-val" id="coreVal-7">15%</span></div>
+                <div class="core-cell"><span class="core-cell-id">C8</span><div class="core-cell-bar-wrap"><div class="core-cell-bar" id="coreBar-8" style="height: 52%;"></div></div><span class="core-cell-val" id="coreVal-8">52%</span></div>
+                <div class="core-cell"><span class="core-cell-id">C9</span><div class="core-cell-bar-wrap"><div class="core-cell-bar" id="coreBar-9" style="height: 38%;"></div></div><span class="core-cell-val" id="coreVal-9">38%</span></div>
+                <div class="core-cell"><span class="core-cell-id">C10</span><div class="core-cell-bar-wrap"><div class="core-cell-bar" id="coreBar-10" style="height: 70%;"></div></div><span class="core-cell-val" id="coreVal-10">70%</span></div>
+                <div class="core-cell"><span class="core-cell-id">C11</span><div class="core-cell-bar-wrap"><div class="core-cell-bar" id="coreBar-11" style="height: 27%;"></div></div><span class="core-cell-val" id="coreVal-11">27%</span></div>
+                <div class="core-cell"><span class="core-cell-id">C12</span><div class="core-cell-bar-wrap"><div class="core-cell-bar" id="coreBar-12" style="height: 19%;"></div></div><span class="core-cell-val" id="coreVal-12">19%</span></div>
+                <div class="core-cell"><span class="core-cell-id">C13</span><div class="core-cell-bar-wrap"><div class="core-cell-bar" id="coreBar-13" style="height: 48%;"></div></div><span class="core-cell-val" id="coreVal-13">48%</span></div>
+                <div class="core-cell"><span class="core-cell-id">C14</span><div class="core-cell-bar-wrap"><div class="core-cell-bar" id="coreBar-14" style="height: 31%;"></div></div><span class="core-cell-val" id="coreVal-14">31%</span></div>
+                <div class="core-cell"><span class="core-cell-id">C15</span><div class="core-cell-bar-wrap"><div class="core-cell-bar" id="coreBar-15" style="height: 12%;"></div></div><span class="core-cell-val" id="coreVal-15">12%</span></div>
+              </div>
+            </div>
+
+            <!-- Process Table Preview with interactive kill -->
+            <div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 4px; font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-dim);">
+                <span>WORKSTATION PROCESS DISPATCHER</span>
+                <span>INTERACTIVE DEMO (CLICK KILL)</span>
+              </div>
+              <table class="process-preview-table" id="hudProcessTable">
+                <thead>
+                  <tr>
+                    <th>PID</th>
+                    <th>NAME</th>
+                    <th>CPU%</th>
+                    <th>RAM</th>
+                    <th>ACTION</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style="color: #60A5FA;">4182</td>
+                    <td style="color: #FFFFFF; font-weight: 600;">cargo.exe (build)</td>
+                    <td style="color: var(--accent-red);">18.4%</td>
+                    <td>842 MB</td>
+                    <td><button class="badge-kill" data-pid="4182" data-name="cargo.exe">KILL</button></td>
+                  </tr>
+                  <tr>
+                    <td style="color: #60A5FA;">1924</td>
+                    <td style="color: #FFFFFF; font-weight: 600;">rustc.exe (worker)</td>
+                    <td style="color: var(--accent-amber);">11.2%</td>
+                    <td>1,240 MB</td>
+                    <td><button class="badge-kill" data-pid="1924" data-name="rustc.exe">KILL</button></td>
+                  </tr>
+                  <tr>
+                    <td style="color: #60A5FA;">8102</td>
+                    <td>alacritty.exe</td>
+                    <td>1.1%</td>
+                    <td>68 MB</td>
+                    <td><button class="badge-kill" data-pid="8102" data-name="alacritty.exe">KILL</button></td>
+                  </tr>
+                  <tr>
+                    <td style="color: #60A5FA;">9941</td>
+                    <td>taskee.exe</td>
+                    <td style="color: var(--status-ok);">0.3%</td>
+                    <td>14 MB</td>
+                    <td><button class="badge-kill" data-pid="9941" data-name="taskee.exe">KILL</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Key Features Grid -->
+    <section id="featuresSection" style="border-top: 1px solid var(--border-subtle); background: rgba(18, 19, 22, 0.4);">
+      <div class="container">
+        <div class="section-header">
+          <span class="hud-tag hud-tag-emerald">HARDWARE INSTRUMENTATION</span>
+          <h2>Engineered for Ultimate Workstation Clarity</h2>
+          <p>
+            Taskee dispenses with generic bubbly consumer widgets. Instead, it provides razor-sharp borders, calibrated CPU engines, and zero-compromise hardware metrics.
+          </p>
+        </div>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon-wrap">⚡</div>
+            <h3>Calibrated CPU Engine</h3>
+            <p>
+              Prevents the classic 0% cold-start deltas on Windows and Linux by priming measurement windows, guaranteeing instantaneous and accurate CPU percentage calculation on launch.
+            </p>
+            <div class="feature-badge-row">
+              <span class="hud-tag">sysinfo 0.39</span>
+              <span class="hud-tag">Zero Delta Lag</span>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon-wrap">📈</div>
+            <h3>Dual 60s Live Time Plots</h3>
+            <p>
+              Hardware-accelerated live time-series charts powered by <code>egui_plot</code>. Track continuous 60-second hardware load deltas with zero dropped frames.
+            </p>
+            <div class="feature-badge-row">
+              <span class="hud-tag">egui_plot</span>
+              <span class="hud-tag">60 FPS</span>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon-wrap">🎛️</div>
+            <h3>Per-Core Thread Matrix</h3>
+            <p>
+              Adaptive multi-core grid that dynamically displays every logical thread on your CPU. Immediate visual feedback on thread pinning and uneven workload distribution.
+            </p>
+            <div class="feature-badge-row">
+              <span class="hud-tag">1 to 128 Cores</span>
+              <span class="hud-tag">Dynamic Grid</span>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon-wrap">🛡️</div>
+            <h3>Workstation Process Manager</h3>
+            <p>
+              Dense telemetry table featuring PID, Status (RUN/SLEEP), CPU%, RAM consumption, and live runtime. Sort instantly by any metric and terminate rogue tasks with feedback.
+            </p>
+            <div class="feature-badge-row">
+              <span class="hud-tag">Instant Sort</span>
+              <span class="hud-tag">Safe Kill</span>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon-wrap">💾</div>
+            <h3>Storage & Network Telemetry</h3>
+            <p>
+              Monitor every filesystem mount point (<code>/</code>, <code>/mnt/d</code>, <code>C:\</code>, <code>D:\</code>) and live network interface throughput rates (KB/s RX and TX) in real-time.
+            </p>
+            <div class="feature-badge-row">
+              <span class="hud-tag">All Partitions</span>
+              <span class="hud-tag">RX/TX Rates</span>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon-wrap">🎨</div>
+            <h3>ArtCraft Ultra-Dark Palette</h3>
+            <p>
+              Brutalist HUD aesthetic engineered specifically for developer multi-monitor setups and OLED displays. Monospace telemetry, crisp dividers, and zero distraction.
+            </p>
+            <div class="feature-badge-row">
+              <span class="hud-tag">#0D0E10 Canvas</span>
+              <span class="hud-tag">OLED Optimized</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Performance Comparison Matrix -->
+    <section id="comparisonSection">
+      <div class="container">
+        <div class="section-header">
+          <span class="hud-tag hud-tag-accent">BENCHMARK MATRIX</span>
+          <h2>Taskee vs Traditional System Monitors</h2>
+          <p>
+            Electron monitors consume more resources than the tasks you are trying to observe. Taskee is 100% native Rust.
+          </p>
+        </div>
+
+        <div class="comparison-wrapper">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>Telemetry Metric</th>
+                <th class="highlight">TASKEE (PURE RUST)</th>
+                <th>ELECTRON MONITORS</th>
+                <th>DEFAULT OS TASK MANAGERS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Memory Footprint (Idle)</strong></td>
+                <td class="highlight"><span class="status-check">~12 - 15 MB</span></td>
+                <td><span class="status-cross">350 - 650 MB</span></td>
+                <td>60 - 140 MB</td>
+              </tr>
+              <tr>
+                <td><strong>Idle Background CPU</strong></td>
+                <td class="highlight"><span class="status-check">0.0%</span></td>
+                <td><span class="status-cross">1.5% - 4.2%</span></td>
+                <td>0.3% - 1.0%</td>
+              </tr>
+              <tr>
+                <td><strong>GUI Framework & Runtime</strong></td>
+                <td class="highlight"><span class="status-check">Pure Rust (eframe / egui)</span></td>
+                <td><span class="status-cross">Chromium + Node.js + V8</span></td>
+                <td>Win32 / Cocoa / GTK</td>
+              </tr>
+              <tr>
+                <td><strong>Live Historical 60s Plots</strong></td>
+                <td class="highlight"><span class="status-check">Dual egui_plot Graphs</span></td>
+                <td>Canvas / WebGL / SVG</td>
+                <td>Basic OS graphs</td>
+              </tr>
+              <tr>
+                <td><strong>Cold Start Startup Time</strong></td>
+                <td class="highlight"><span class="status-check">&lt; 150 ms</span></td>
+                <td><span class="status-cross">1,800 - 3,500 ms</span></td>
+                <td>~400 ms</td>
+              </tr>
+              <tr>
+                <td><strong>Cross-Platform Consistency</strong></td>
+                <td class="highlight"><span class="status-check">Identical UI (Win / Linux)</span></td>
+                <td>Webview differences</td>
+                <td>Completely different OS UIs</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ArtCraft Color Tokens Section -->
+    <section id="paletteSection" style="border-top: 1px solid var(--border-subtle); background: rgba(18, 19, 22, 0.4);">
+      <div class="container">
+        <div class="section-header">
+          <span class="hud-tag">DESIGN SYSTEM</span>
+          <h2>ArtCraft Ultra-Dark HUD Color Tokens</h2>
+          <p>
+            Meticulously calibrated color spaces for maximum legibility under intensive dark room environments.
+          </p>
+        </div>
+
+        <div class="palette-grid">
+          <div class="palette-item">
+            <div class="color-swatch" style="background: #0D0E10;"></div>
+            <div class="palette-info">
+              <span class="palette-token">bg_main</span>
+              <span class="palette-hex">#0D0E10</span>
+            </div>
+          </div>
+          <div class="palette-item">
+            <div class="color-swatch" style="background: #121316;"></div>
+            <div class="palette-info">
+              <span class="palette-token">bg_card</span>
+              <span class="palette-hex">#121316</span>
+            </div>
+          </div>
+          <div class="palette-item">
+            <div class="color-swatch" style="background: #181A1F;"></div>
+            <div class="palette-info">
+              <span class="palette-token">bg_input</span>
+              <span class="palette-hex">#181A1F</span>
+            </div>
+          </div>
+          <div class="palette-item">
+            <div class="color-swatch" style="background: #22252C;"></div>
+            <div class="palette-info">
+              <span class="palette-token">border</span>
+              <span class="palette-hex">#22252C</span>
+            </div>
+          </div>
+          <div class="palette-item">
+            <div class="color-swatch" style="background: #10B981;"></div>
+            <div class="palette-info">
+              <span class="palette-token">status_ok</span>
+              <span class="palette-hex">#10B981</span>
+            </div>
+          </div>
+          <div class="palette-item">
+            <div class="color-swatch" style="background: #2563EB;"></div>
+            <div class="palette-info">
+              <span class="palette-token">accent_blue</span>
+              <span class="palette-hex">#2563EB</span>
+            </div>
+          </div>
+          <div class="palette-item">
+            <div class="color-swatch" style="background: #EF4444;"></div>
+            <div class="palette-info">
+              <span class="palette-token">accent_red</span>
+              <span class="palette-hex">#EF4444</span>
+            </div>
+          </div>
+          <div class="palette-item">
+            <div class="color-swatch" style="background: #8B5CF6;"></div>
+            <div class="palette-info">
+              <span class="palette-token">accent_purple</span>
+              <span class="palette-hex">#8B5CF6</span>
+            </div>
+          </div>
+          <div class="palette-item">
+            <div class="color-swatch" style="background: #F59E0B;"></div>
+            <div class="palette-info">
+              <span class="palette-token">accent_amber</span>
+              <span class="palette-hex">#F59E0B</span>
+            </div>
+          </div>
+          <div class="palette-item">
+            <div class="color-swatch" style="background: #14B8A6;"></div>
+            <div class="palette-info">
+              <span class="palette-token">accent_teal</span>
+              <span class="palette-hex">#14B8A6</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom CTA Banner -->
+    <section id="ctaBannerSection">
+      <div class="container">
+        <div class="cta-banner">
+          <div class="cta-content">
+            <span class="hud-tag hud-tag-emerald" style="margin-bottom: 1rem;">GET STARTED TODAY</span>
+            <h2>Take Full Control of Your Workstation</h2>
+            <p>
+              Available as a portable zero-dependency executable or installable in one command via Cargo.
+            </p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+              <a href="/install" class="btn btn-primary" id="ctaBannerInstallBtn">DOWNLOAD TASKEE</a>
+              <a href="/about" class="btn btn-secondary" id="ctaBannerAboutBtn">READ SPECIFICATIONS</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    "##;
+
+    render_page(title, description, "home", content)
+}
