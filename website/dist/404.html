@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 Not Found — Taskee</title>
+  <meta name="description" content="The requested telemetry endpoint could not be located.">
+  <meta name="theme-color" content="#0D0E10">
+  <meta property="og:title" content="404 Not Found — Taskee">
+  <meta property="og:description" content="The requested telemetry endpoint could not be located.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="/static/images/logo.jpg">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <!-- Header / Navigation Bar -->
+  <header class="navbar" id="siteHeader">
+    <div class="container nav-container">
+      <a href="/" class="brand-link" id="navBrandLink" aria-label="Taskee Home">
+        <img src="/static/images/logo.jpg" alt="Taskee Cyber HUD Logo" class="brand-logo-img" id="navBrandLogo">
+        <div class="brand-text-wrap">
+          <div class="brand-title">TASKEE<span class="brand-accent">.RS</span></div>
+          <div class="brand-subtitle">Workstation Telemetry</div>
+        </div>
+      </a>
+
+      <!-- Desktop & Mobile Nav Menu -->
+      <nav aria-label="Primary Navigation">
+        <ul class="nav-menu" id="navMenu">
+          <li><a href="/" class="nav-item-link " id="navLinkHome">HOME</a></li>
+          <li><a href="/about" class="nav-item-link " id="navLinkAbout">ABOUT</a></li>
+          <li><a href="/install" class="nav-item-link " id="navLinkInstall">INSTALL</a></li>
+          <li><a href="/contact" class="nav-item-link " id="navLinkContact">CONTACT</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <div class="nav-badge-status" id="navStatusBadge" title="Native Rust Engine Active">
+          <span class="pulse-dot"></span>
+          <span>100% RUST</span>
+        </div>
+        <a href="/install" class="btn btn-primary btn-sm" id="navCtaDownload">DOWNLOAD</a>
+        <button class="mobile-toggle" id="mobileNavToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Page Content -->
+  <main id="mainContent">
+    
+    <section class="hero" style="min-height: 65vh; display: flex; align-items: center;">
+      <div class="container" style="text-align: center;">
+        <div style="max-width: 580px; margin: 0 auto;">
+          <span class="hud-tag hud-tag-accent" style="color: var(--accent-red); border-color: rgba(239, 68, 68, 0.4); background: rgba(239, 68, 68, 0.08);">
+            SIGNAL DISRUPTED // 404 ERROR
+          </span>
+          <h1 style="margin: 1.25rem 0 0.75rem; font-size: 3rem;">Page Not Found</h1>
+          <p style="margin-bottom: 2rem; font-size: 1.05rem;">
+            The endpoint <code>/404</code> does not exist on this Taskee telemetry host.
+          </p>
+          <div style="display: flex; gap: 1rem; justify-content: center;">
+            <a href="/" class="btn btn-primary">RETURN TO HOME</a>
+            <a href="/install" class="btn btn-secondary">INSTALLATION</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+  </main>
+
+  <!-- Site Footer -->
+  <footer id="siteFooter">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div class="brand-title" style="margin-bottom: 0.5rem;">TASKEE<span class="brand-accent">.RS</span></div>
+          <p style="font-size: 0.88rem; max-width: 320px;">
+            Lightweight, high-density desktop system resource monitor and mini task manager engineered in pure Rust.
+          </p>
+          <div style="margin-top: 0.8rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <span class="hud-tag hud-tag-emerald">RUST 2024</span>
+            <span class="hud-tag">ZERO WEBVIEW</span>
+            <span class="hud-tag">ARTCRAFT HUD</span>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="/" id="footerLinkHome">Home Overview</a></li>
+            <li><a href="/about" id="footerLinkAbout">Architecture & Philosophy</a></li>
+            <li><a href="/install" id="footerLinkInstall">Download & Installation</a></li>
+            <li><a href="/contact" id="footerLinkContact">Developer Channels</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Telemetry Stack</h4>
+          <ul>
+            <li><a href="https://github.com/emilk/egui" target="_blank" rel="noopener">egui 0.36</a></li>
+            <li><a href="https://github.com/emilk/egui/tree/master/crates/eframe" target="_blank" rel="noopener">eframe Native</a></li>
+            <li><a href="https://github.com/GuillaumeGomez/sysinfo" target="_blank" rel="noopener">sysinfo 0.39</a></li>
+            <li><a href="https://github.com/tokio-rs/axum" target="_blank" rel="noopener">axum 0.7</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Telemetry Health</h4>
+          <div style="background: #0E1013; border: 1px solid var(--border-subtle); padding: 0.75rem; border-radius: 4px; font-family: var(--font-mono); font-size: 0.75rem;">
+            <div style="color: var(--text-dim); margin-bottom: 0.25rem;">SERVER TELEMETRY</div>
+            <div style="color: var(--status-ok); font-weight: 600;">STATUS: OPERATIONAL</div>
+            <div style="color: var(--text-muted); margin-top: 0.25rem;">LATENCY: &lt;1ms (Rust SSR)</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 Taskee Project. Engineered with 100% Pure Rust. Open-Source.</div>
+        <div class="footer-bottom-links">
+          <a href="/about">Philosophy</a>
+          <a href="/install">Get Started</a>
+          <a href="/contact">Support</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/static/js/main.js"></script>
+</body>
+</html>

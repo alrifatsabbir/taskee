@@ -1,5 +1,4 @@
-mod assets;
-mod pages;
+use taskee_website::{assets, pages};
 
 use axum::{
     body::Body,

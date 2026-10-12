@@ -1,0 +1,5 @@
+{
+  "outputDirectory": "website/dist",
+  "cleanUrls": true,
+  "trailingSlash": false
+}
